@@ -1,5 +1,6 @@
 import { signIn, signOut } from "@/actions";
 import { auth } from "@/auth";
+import Profile from "@/components/profile";
 import { Button } from "@nextui-org/react";
 
 export default async function Home() {
@@ -20,6 +21,8 @@ export default async function Home() {
       ) : (
         <div>signed out</div>
       )}
+
+      <Profile />
     </div>
   );
 }
