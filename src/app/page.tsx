@@ -1,9 +1,12 @@
+import { signIn } from "@/actions";
 import { Button } from "@nextui-org/react";
 
 export default function Home() {
   return (
     <div>
-      <Button> Click me </Button>
+      <form action={signIn}>
+        <Button type="submit"> Click me </Button>
+      </form>
     </div>
   );
 }
