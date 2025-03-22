@@ -42,7 +42,7 @@ export default function TopicCreateForm() {
               errorMessage={formState.errors.name?.join(", ")}
             />
 
-            {/* if we werent using nextUi, we would use the below div to get the error message out of the form */}
+            {/* if we were not using nextUi, we would use the below div to get the error message out of the form */}
             {/* <div className="bg-red-400">{formState.errors.name.join(", ")}</div> */}
 
             <Textarea
@@ -53,6 +53,14 @@ export default function TopicCreateForm() {
               isInvalid={!formState.errors.description}
               errorMessage={formState.errors.description?.join(", ")}
             />
+
+            {formState.errors._form ? (
+              <div className="p-2 bg-red-200 border border-red-400 rounded">
+                {" "}
+                {formState.errors._form?.join(", ")}{" "}
+              </div>
+            ) : null}
+
             <Button type="submit">Submit</Button>
           </div>
         </form>

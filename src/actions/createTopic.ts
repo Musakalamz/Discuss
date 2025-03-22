@@ -1,5 +1,6 @@
 "use server";
 
+import { auth } from "@/auth";
 import { z } from "zod";
 
 const createTopicSchema = z.object({
@@ -16,6 +17,7 @@ interface createTopicStateForm {
   errors: {
     name?: string[];
     description?: string[];
+    _form?: string[];
   };
 }
 
@@ -35,9 +37,18 @@ export async function createTopic(
   if (!result.success) {
     // console.log(result.error);
     console.log(result.error.flatten().fieldErrors);
-    
+
     return {
       errors: result.error.flatten().fieldErrors,
+    };
+  }
+
+  const session = await auth();
+  if (!session || !session.user) {
+    return {
+      errors: {
+        _form: ["You must be signed in to do this"],
+      },
     };
   }
 
