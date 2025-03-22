@@ -12,7 +12,9 @@ import {
 import { useActionState } from "react";
 
 export default function TopicCreateForm() {
-  const [formState, action] = useActionState(createTopic, 5);
+  const [formState, action] = useActionState(createTopic, {
+    errors: {},
+  });
 
   return (
     <Popover>
