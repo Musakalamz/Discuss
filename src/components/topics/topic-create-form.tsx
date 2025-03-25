@@ -1,18 +1,18 @@
 "use client";
 
-import { createTopic } from "@/actions";
 import {
-  Button,
   Input,
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
+  Button,
   Textarea,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
 } from "@nextui-org/react";
+import * as actions from "@/actions";
 import { startTransition, useActionState } from "react";
 
 export default function TopicCreateForm() {
-  const [formState, action] = useActionState(createTopic, {
+  const [formState, action] = useActionState(actions.createTopic, {
     errors: {},
   });
 
@@ -25,20 +25,20 @@ export default function TopicCreateForm() {
   }
 
   return (
-    <Popover>
+    <Popover placement="left">
       <PopoverTrigger>
-        <Button color="primary">Create A Topic</Button>
+        <Button color="primary">Create a Topic</Button>
       </PopoverTrigger>
       <PopoverContent>
-        <form action={action} onSubmit={handleSubmit} noValidate>
+        <form onSubmit={handleSubmit} noValidate>
           <div className="flex flex-col gap-4 p-4 w-80">
-            <h3 className="text-lg">Create A Topic</h3>
+            <h3 className="text-lg">Create a Topic</h3>
             <Input
               name="name"
-              aria-label="Name"
+              label="Name"
               labelPlacement="outside"
               placeholder="Name"
-              isInvalid={!formState.errors.name}
+              isInvalid={!!formState.errors.name}
               errorMessage={formState.errors.name?.join(", ")}
             />
 
@@ -49,8 +49,8 @@ export default function TopicCreateForm() {
               name="description"
               label="Description"
               labelPlacement="outside"
-              placeholder="describe your topic"
-              isInvalid={!formState.errors.description}
+              placeholder="Describe your topic"
+              isInvalid={!!formState.errors.description}
               errorMessage={formState.errors.description?.join(", ")}
             />
 

@@ -2,6 +2,11 @@
 
 import { auth } from "@/auth";
 import { z } from "zod";
+import type { Topic } from "@prisma/client";
+import { db } from "@/db";
+import { redirect } from "next/navigation";
+import paths from "@/path";
+import { revalidatePath } from "next/cache";
 
 const createTopicSchema = z.object({
   name: z
@@ -13,7 +18,7 @@ const createTopicSchema = z.object({
   description: z.string().min(10),
 });
 
-interface createTopicStateForm {
+interface CreateTopicFormState {
   errors: {
     name?: string[];
     description?: string[];
@@ -22,9 +27,9 @@ interface createTopicStateForm {
 }
 
 export async function createTopic(
-  formState: createTopicStateForm,
+  formState: CreateTopicFormState,
   formData: FormData
-): Promise<createTopicStateForm> {
+): Promise<CreateTopicFormState> {
   // const name = formData.get("name");
   // const description = formData.get("description");
   // console.log(name, description);
@@ -34,9 +39,11 @@ export async function createTopic(
     description: formData.get("description"),
   });
 
+  // console.log(result);
+
   if (!result.success) {
     // console.log(result.error);
-    console.log(result.error.flatten().fieldErrors);
+    // console.log(result.error.flatten().fieldErrors);
 
     return {
       errors: result.error.flatten().fieldErrors,
@@ -52,9 +59,31 @@ export async function createTopic(
     };
   }
 
-  return {
-    errors: {},
-  };
+  let topic: Topic;
 
-  // TODO: Revalidate the homepage after creating a topic
+  try {
+    topic = await db.topic.create({
+      data: {
+        slug: result.data.name,
+        description: result.data.description,
+      },
+    });
+  } catch (error: unknown) {
+    if (error instanceof Error) {
+      return {
+        errors: {
+          _form: [error.message],
+        },
+      };
+    } else {
+      return {
+        errors: {
+          _form: ["something went wrong"],
+        },
+      };
+    }
+  }
+
+  revalidatePath("/");
+  redirect(paths.topicShowPath(topic.slug));
 }
