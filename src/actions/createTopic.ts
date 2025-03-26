@@ -34,6 +34,9 @@ export async function createTopic(
   // const description = formData.get("description");
   // console.log(name, description);
 
+  // Pausing the server action for 2.3 secs
+  // await new Promise((resolve) => setTimeout(resolve, 2500));
+
   const result = createTopicSchema.safeParse({
     name: formData.get("name"),
     description: formData.get("description"),
