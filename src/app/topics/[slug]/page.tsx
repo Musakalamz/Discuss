@@ -1,3 +1,5 @@
+import PostCreateForm from "@/components/posts/postCreateForm";
+
 interface TopicShowPageProps {
   params: Promise<{
     slug: string;
@@ -12,7 +14,9 @@ export default async function page({ params }: TopicShowPageProps) {
         <h1 className="font-bold text-2xl mb-2">{slug}</h1>
       </div>
 
-      <div></div>
+      <div>
+        <PostCreateForm />
+      </div>
     </div>
   );
 }
