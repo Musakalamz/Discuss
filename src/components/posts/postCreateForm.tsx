@@ -13,9 +13,10 @@ import * as actions from "@/actions";
 import FormButton from "../common/formButton";
 
 
-interface PostCreateFormProps [
-slug: string
-]
+interface PostCreateFormProps {
+    slug: string
+}
+
 
 export default function PostCreateForm({slug}: PostCreateFormProps) {
   const [formState, action, isPending] = useActionState(actions.createPost.bind(null, slug), {
