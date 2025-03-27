@@ -1,6 +1,6 @@
 "use server";
 
-import {  z } from "zod";
+import { z } from "zod";
 import type { Post } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
@@ -35,15 +35,24 @@ export async function createPost(
     };
   }
 
+  const session = await auth();
+  if (!session || !session.user) {
+    return {
+      errors: {
+        _form: "You must be signed in to do this",
+      },
+    };
+  }
+  
   // revalidatePath;
   // redirect;
-  // auth;
+
   // db;
   // paths;
 
   return {
-    errors: {}
-  }
+    errors: {},
+  };
 
   // TODO: Revalidate the topic show page after creating a topic
 }
