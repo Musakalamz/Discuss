@@ -1,7 +1,7 @@
 import type { Post } from "@prisma/client";
 import { db } from "..";
 
-type PostWithData = Post & {
+export type PostWithData = Post & {
   topic: { slug: string };
   useer: { name: string | null };
   _count: { comments: number };
