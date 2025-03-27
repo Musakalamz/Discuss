@@ -5,6 +5,7 @@ import { useFormStatus } from "react-dom";
 
 interface FormButtonProps {
   children: React.ReactNode;
+  isLoading: boolean;
 }
 
 export default function FormButton({ children }: FormButtonProps) {

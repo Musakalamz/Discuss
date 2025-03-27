@@ -13,7 +13,7 @@ import { startTransition, useActionState } from "react";
 import FormButton from "../common/formButton";
 
 export default function TopicCreateForm() {
-  const [formState, action] = useActionState(actions.createTopic, {
+  const [formState, action, isPending] = useActionState(actions.createTopic, {
     errors: {},
   });
 
@@ -62,7 +62,7 @@ export default function TopicCreateForm() {
               </div>
             ) : null}
 
-            <FormButton>Save</FormButton>
+            <FormButton isLoading={isPending}>Save</FormButton>
             {/* <Button type="submit">Submit</Button> */}
           </div>
         </form>
