@@ -12,8 +12,13 @@ import { useActionState } from "react";
 import * as actions from "@/actions";
 import FormButton from "../common/formButton";
 
-export default function PostCreateForm() {
-  const [formState, action, isPending] = useActionState(actions.createPost, {
+
+interface PostCreateFormProps [
+slug: string
+]
+
+export default function PostCreateForm({slug}: PostCreateFormProps) {
+  const [formState, action, isPending] = useActionState(actions.createPost.bind(null, slug), {
     errors: {},
   });
 
@@ -27,22 +32,23 @@ export default function PostCreateForm() {
         <form action={action}>
           <div className="flex flex-col gap-4 w-80 p-4">
             <h3 className="text-lg">Create a Post</h3>
+
             <Input
-              isInvalid={!formState.errors.title}
-              errorMessage={formState.errors.title?.join(", ")}
               name="title"
               label="Title"
-              placeholder="Title"
               labelPlacement="outside"
+              placeholder="Title"
+              isInvalid={!!formState.errors.title}
+              errorMessage={formState.errors.title?.join(", ")}
             />
 
             <Textarea
-              isInvalid={!formState.errors.content}
-              errorMessage={formState.errors.content?.join(", ")}
               name="content"
               label="Content"
-              placeholder="Content"
               labelPlacement="outside"
+              placeholder="Content of your Post"
+              isInvalid={!!formState.errors.content}
+              errorMessage={formState.errors.content?.join(", ")}
             />
           </div>
 

@@ -21,6 +21,7 @@ interface CreatePostFormState {
   };
 }
 export async function createPost(
+  slug: string,
   formState: CreatePostFormState,
   formData: FormData
 ): Promise<CreatePostFormState> {
@@ -43,12 +44,23 @@ export async function createPost(
       },
     };
   }
-  
+
   // revalidatePath;
   // redirect;
 
   // db;
   // paths;
+
+  const topic = await db.topic.findFirst({
+    where: { slug },
+  });
+  if (!topic) {
+    return {
+      errors: {
+        _form: "Cannot find topic",
+      },
+    };
+  }
 
   return {
     errors: {},
