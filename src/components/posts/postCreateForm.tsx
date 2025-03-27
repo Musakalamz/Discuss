@@ -12,16 +12,17 @@ import { useActionState } from "react";
 import * as actions from "@/actions";
 import FormButton from "../common/formButton";
 
-
 interface PostCreateFormProps {
-    slug: string
+  slug: string;
 }
 
-
-export default function PostCreateForm({slug}: PostCreateFormProps) {
-  const [formState, action, isPending] = useActionState(actions.createPost.bind(null, slug), {
-    errors: {},
-  });
+export default function PostCreateForm({ slug }: PostCreateFormProps) {
+  const [formState, action, isPending] = useActionState(
+    actions.createPost.bind(null, slug),
+    {
+      errors: {},
+    }
+  );
 
   return (
     <Popover placement="left">
