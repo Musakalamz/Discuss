@@ -8,6 +8,8 @@ export type CommentWithAuthor = Comment & {
 export async function fetchCommentByPostId(
   postId: string
 ): Promise<CommentWithAuthor[]> {
+  console.log("Introducing duplicate queries");
+
   return db.comment.findMany({
     where: { postId },
     include: {
