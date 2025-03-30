@@ -35,7 +35,7 @@ export function fetchTopPosts(): Promise<PostWithData[]> {
     include: {
       topic: { select: { slug: true } },
       user: { select: { name: true, image: true } },
-      _count: { select: { comment: true } },
+      _count: { select: { comments: true } },
     },
     take: 5,
   });
